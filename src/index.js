@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './exercise6.3-6.8/App';
 import store from './exercise6.3-6.8/store/store';
-// import noteReducer from './reducers/noteReducer';
-// import filterReducer from './reducers/filterReducer';
 
 // const reducer = combineReducers({
 // 	notes: noteReducer,
 // 	filter: filterReducer,
 // });
 
+// service.getAll().then((notes) => {
+// 	store.dispatch(initializeNotes(notes));
+// });
+
+// const store = createStore(reducer, composeWithDevTools());
 ReactDOM.render(
 	<Provider store={store}>
 		<App />
