@@ -1,18 +1,16 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { createAnecdote } from '../reducers/anecdotesReducer';
 import { setNotification } from '../reducers/notificationReducers';
 
 const AnecdoteForm = () => {
-	const dispatch = useDispatch();
-
 	const addAnecdotes = async (event) => {
 		event.preventDefault();
 		const content = event.target.anecdote.value;
 		event.target.anecdote.value = '';
 
-		dispatch(createAnecdote(content));
-		dispatch(setNotification(`you voted ${content}`, 3));
+		createAnecdote(content);
+		setNotification(`you voted ${content}`, 3);
 	};
 	return (
 		<form onSubmit={addAnecdotes}>
@@ -22,4 +20,9 @@ const AnecdoteForm = () => {
 	);
 };
 
-export default AnecdoteForm;
+const mapDispatchToProps = {
+	createAnecdote,
+	setNotification,
+};
+
+export default connect(null, mapDispatchToProps)(AnecdoteForm);
