@@ -13,9 +13,9 @@ const AnecdoteList = () => {
 		);
 	};
 	const dispatch = useDispatch();
-	const vote = (id) => {
-		dispatch(setNotification(`you vote for me`));
-		dispatch(increaseVoteCount(id));
+	const vote = (anecdote) => {
+		dispatch(setNotification(`you voted ${anecdote.content} with votes `, 3));
+		dispatch(increaseVoteCount(anecdote));
 	};
 	return (
 		<div>
@@ -23,7 +23,7 @@ const AnecdoteList = () => {
 				<div key={anecdote.id}>
 					<div>{anecdote.content}</div>
 					<div>has {anecdote.votes} votes</div>
-					<button onClick={() => vote(anecdote.id)}>vote</button>
+					<button onClick={() => vote(anecdote)}>vote</button>
 				</div>
 			))}
 		</div>

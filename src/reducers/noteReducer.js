@@ -1,19 +1,4 @@
-// const initialState = {
-// 	notes: [
-// 		{
-// 			content: 'the app state is in redux store',
-// 			important: true,
-// 			id: 1,
-// 		},
-
-// 		{
-// 			content: 'state changes are made with actions',
-// 			important: false,
-// 			id: 2,
-// 		},
-// 	],
-// 	filter: 'IMPORTANT',
-// };
+import { service } from '../services/notes';
 const noteReducer = (state = [], action) => {
 	switch (action.type) {
 		case 'NEW_NOTE':
@@ -36,22 +21,20 @@ const noteReducer = (state = [], action) => {
 	}
 };
 
-// const generateId = () => {
-// 	Math.floor(Math.random() * 10000000).toFixed(0);
-// };
-
-export const initializeNotes = (notes) => {
-	return {
+export const initializeNotes = () => async (dispatch) => {
+	const notes = await service.getAll();
+	dispatch({
 		type: 'INIT_NOTES',
 		data: notes,
-	};
+	});
 };
 
-export const createNote = (data) => {
-	return {
+export const createNote = (content) => async (dispatch) => {
+	const newNote = await service.createNew(content);
+	dispatch({
 		type: 'NEW_NOTE',
-		data,
-	};
+		data: newNote,
+	});
 };
 
 export const toggleImportanceOf = (id) => {
@@ -63,3 +46,23 @@ export const toggleImportanceOf = (id) => {
 	};
 };
 export default noteReducer;
+
+// {
+// 	"notes": [
+// 		{
+// 			"content": "the app state is in redux store",
+// 			"important": true,
+// 			"id": 1
+// 		},
+// 		{
+// 			"content": "state changes are made with actions",
+// 			"important": false,
+// 			"id": 2
+// 		},
+// 		{
+// 			"content": "I added a new note",
+// 			"important": false,
+// 			"id": 3
+// 		}
+// 	]
+// }

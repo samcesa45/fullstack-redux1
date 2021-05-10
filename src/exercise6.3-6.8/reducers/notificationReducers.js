@@ -3,8 +3,8 @@ const initialState = '';
 const notificationReducers = (state = initialState, action) => {
 	switch (action.type) {
 		case 'SET_NOTIFICATION':
-			clearTimeout(action.data.delay);
-			return action.data.message;
+			clearTimeout(state.delay);
+			return [action.data.message, action.data.delay];
 
 		case 'REMOVE_NOTIFICATION':
 			return initialState;
@@ -14,22 +14,22 @@ const notificationReducers = (state = initialState, action) => {
 	}
 };
 
-export const setNotification = (message, delay) => {
-	return {
+export const setNotification = (message, delay) => async (dispatch) => {
+	dispatch({
 		type: 'SET_NOTIFICATION',
 		data: {
 			message,
 			delay: setTimeout(() => {
-				removeNotification('');
+				dispatch(removeNotification(''));
 			}, delay * 1000),
 		},
-	};
+	});
 };
 
-export const removeNotification = () => {
-	return {
+export const removeNotification = () => async (dispatch) => {
+	dispatch({
 		type: 'REMOVE_NOTIFICATION',
-	};
+	});
 };
 
 export default notificationReducers;
